@@ -4,34 +4,38 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.Faults;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
-  // Talons
-      Talon leftFrontTalon = new Talon(0);
-      Talon rightFrontTalon = new Talon(1);
-      Talon leftBackTalon = new Talon(2);
-      Talon rightBackTalon = new Talon(3);
+  // Talons (Switched to SRX's)
+      WPI_TalonSRX _rghtFront = new WPI_TalonSRX(1);
+      WPI_TalonSRX _rghtFollower = new WPI_TalonSRX(10);
+      WPI_TalonSRX _leftFront = new WPI_TalonSRX(2);
+      WPI_TalonSRX _leftFollower = new WPI_TalonSRX(20);
+  //Diff Drive
+      DifferentialDrive differentialDrive = new DifferentialDrive(_leftFront, _rghtFront);
 
-      // Diff Drive
-      MotorControllerGroup leftMotors = new MotorControllerGroup(leftFrontTalon, leftBackTalon);
-      MotorControllerGroup rightMotors = new MotorControllerGroup(rightFrontTalon, rightBackTalon);
-
-      DifferentialDrive differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
+  //Faults
+      Faults _faults_L = new Faults();
+      Faults _faults_R = new Faults();
 
   
-
+  // ekkis Bokkis ekkis
   XboxController xbox = new XboxController(0);
   
 
 
   public Drivetrain() {
-   
+    _leftFront.getFaults(_faults_L);
+    _rghtFront.getFaults(_faults_R);
+    _rghtFollower.follow(_rghtFront);
+    _leftFollower.follow(_leftFront);
   }
 
   public void arcadeDrive(double movespeed, double rotatespeed) {

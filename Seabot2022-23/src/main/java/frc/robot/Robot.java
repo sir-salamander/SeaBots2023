@@ -87,7 +87,18 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    //auto selector
+    switch (m_autoSelected) {
+      case kRedAuto:
+      //Red Side Auto Code
+      
+      break;
+      case kBlueAuto:
+      //Blue side auto code
+      break;
+    }
+  }
 
   @Override
   public void teleopInit() {
