@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.Faults;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.XboxController;
@@ -21,9 +20,6 @@ public class Drivetrain extends SubsystemBase {
   //Diff Drive
       DifferentialDrive differentialDrive = new DifferentialDrive(_leftFront, _rghtFront);
 
-  //Faults
-      Faults _faults_L = new Faults();
-      Faults _faults_R = new Faults();
 
   
   // ekkis Bokkis ekkis
@@ -32,8 +28,7 @@ public class Drivetrain extends SubsystemBase {
 
 
   public Drivetrain() {
-    _leftFront.getFaults(_faults_L);
-    _rghtFront.getFaults(_faults_R);
+    
     _rghtFollower.follow(_rghtFront);
     _leftFollower.follow(_leftFront);
   }
