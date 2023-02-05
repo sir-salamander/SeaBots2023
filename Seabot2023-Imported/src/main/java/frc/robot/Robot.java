@@ -5,12 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.ultraSonicSensor;
 
 
 
@@ -46,9 +45,6 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putData("Auto Choices", m_Chooser);
   }
-  Talon shooterL = new Talon(4);
-  Talon shooterR = new Talon(5);
-  MotorControllerGroup shooter = new MotorControllerGroup(shooterL, shooterR);
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
    * that you want ran during disabled, autonomous, teleoperated and test.
@@ -63,6 +59,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    SmartDashboard.putNumber("Distance (volts)", ultraSonicSensor.getVoltage());
+	  SmartDashboard.putNumber("Distance (real)", ultraSonicSensor.getDistance());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -98,6 +96,9 @@ public class Robot extends TimedRobot {
       //Blue side auto code
       break;
     }
+    //ultrasonic sensor stopper
+    /*STILL UNDER CONSTRUCTION*/
+
   }
 
   @Override
