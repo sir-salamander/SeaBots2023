@@ -6,8 +6,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
@@ -19,11 +21,11 @@ public class Drivetrain extends SubsystemBase {
       WPI_TalonSRX _leftFollower = new WPI_TalonSRX(20);
   //Diff Drive
       DifferentialDrive differentialDrive = new DifferentialDrive(_leftFront, _rghtFront);
-
-
-  
-  // ekkis Bokkis ekkis
-  XboxController xbox = new XboxController(0);
+  //Encoders
+      Encoder leftEncoder = new Encoder(0, 1);
+      Encoder rightEncoder = new Encoder(2, 3);
+  //ekkis Bokkis ekkis
+      XboxController xbox = new XboxController(0);
   
 
 
@@ -31,6 +33,9 @@ public class Drivetrain extends SubsystemBase {
     
     _rghtFollower.follow(_rghtFront);
     _leftFollower.follow(_leftFront);
+
+    SmartDashboard.putNumber("Speed Left", leftEncoder.getRate());
+    SmartDashboard.putNumber("Speed Right", rightEncoder.getRate());
   }
 
   public void arcadeDrive(double movespeed, double rotatespeed) {

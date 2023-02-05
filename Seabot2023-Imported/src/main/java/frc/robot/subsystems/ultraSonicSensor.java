@@ -29,6 +29,7 @@ public class ultraSonicSensor extends SubsystemBase {
     SmartDashboard.putNumber("Distance (volts)", getVoltage());
     SmartDashboard.putNumber("Distance (real)", getDistance());
   }
+  
   public ultraSonicSensor() {
     
   }
