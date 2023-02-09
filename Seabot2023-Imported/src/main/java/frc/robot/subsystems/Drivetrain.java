@@ -33,7 +33,7 @@ public class Drivetrain extends SubsystemBase {
 
 
   public Drivetrain() {
-
+    //Commit to smartDashboard encoder speeds
     SmartDashboard.putNumber("Speed Left", leftEncoder.getRate());
     SmartDashboard.putNumber("Speed Right", rightEncoder.getRate());
   }
