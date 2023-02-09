@@ -19,8 +19,11 @@ public class Drivetrain extends SubsystemBase {
       WPI_TalonSRX _rghtFollower = new WPI_TalonSRX(10);
       WPI_TalonSRX _leftFront = new WPI_TalonSRX(2);
       WPI_TalonSRX _leftFollower = new WPI_TalonSRX(20);
+  //motorcontroller groups
+  MotorControllerGroup rightM = new MotorControllerGroup(_rhgtFront, _rghtFollower);
+  MotorControllerGroup leftM = new MotorControllerGroup(_leftFront, _leftFollower);
   //Diff Drive
-      DifferentialDrive differentialDrive = new DifferentialDrive(_leftFront, _rghtFront);
+      DifferentialDrive differentialDrive = new DifferentialDrive(leftM, rightM);
   //Encoders
       Encoder leftEncoder = new Encoder(0, 1);
       Encoder rightEncoder = new Encoder(2, 3);
@@ -30,9 +33,6 @@ public class Drivetrain extends SubsystemBase {
 
 
   public Drivetrain() {
-    
-    _rghtFollower.follow(_rghtFront);
-    _leftFollower.follow(_leftFront);
 
     SmartDashboard.putNumber("Speed Left", leftEncoder.getRate());
     SmartDashboard.putNumber("Speed Right", rightEncoder.getRate());
