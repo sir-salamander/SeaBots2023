@@ -5,10 +5,12 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,11 +18,12 @@ public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   // Talons (Switched to SRX's)
       WPI_TalonSRX _rghtFront = new WPI_TalonSRX(1);
-      WPI_TalonSRX _rghtFollower = new WPI_TalonSRX(10);
+      WPI_VictorSPX _rghtFollower = new WPI_VictorSPX(10);
       WPI_TalonSRX _leftFront = new WPI_TalonSRX(2);
-      WPI_TalonSRX _leftFollower = new WPI_TalonSRX(20);
+      WPI_VictorSPX _leftFollower = new WPI_VictorSPX(20);
+      
   //motorcontroller groups
-  MotorControllerGroup rightM = new MotorControllerGroup(_rhgtFront, _rghtFollower);
+  MotorControllerGroup rightM = new MotorControllerGroup(_rghtFront, _rghtFollower);
   MotorControllerGroup leftM = new MotorControllerGroup(_leftFront, _leftFollower);
   //Diff Drive
       DifferentialDrive differentialDrive = new DifferentialDrive(leftM, rightM);
