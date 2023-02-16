@@ -42,7 +42,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double movespeed, double rotatespeed) {
-    differentialDrive.arcadeDrive(xbox.getLeftY(), xbox.getRawAxis(2));
+    differentialDrive.arcadeDrive(xbox.getRawAxis(2), xbox.getLeftY());
   }
     //gradle sucks 
   @Override

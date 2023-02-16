@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ultraSonicSensor;
+import frc.robot.subsystems.Drivetrain;
 
 
 
@@ -27,6 +28,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_Chooser = new SendableChooser<>();
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
+  
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -92,6 +94,10 @@ public class Robot extends TimedRobot {
       break;
       case kBlueAuto:
       //Blue side auto code
+      break;
+      case kDefaultAuto:
+      //Default auto code
+
       break;
     }
     //ultrasonic sensor stopper
