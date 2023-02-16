@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,7 +32,11 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_Chooser = new SendableChooser<>();
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  
+  PathPlannerTrajectory blueAuto = PathPlanner.loadPath("blueAuto", null);
+  boolean runAuto = true;
+  double sensorDist = ultraSonicSensor.getDistance();
+  double sensorStop = .32;
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -86,23 +94,29 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    //auto selector
-    switch (m_autoSelected) {
-      case kRedAuto:
-      //Red Side Auto Code
-      
-      break;
-      case kBlueAuto:
-      //Blue side auto code
-      break;
-      case kDefaultAuto:
-      //Default auto code
+  //ultrasonic sensor stopper
+if (Double.compare(sensorStop, sensorDist) == 0){
+    runAuto = false;
+}
+    if (runAuto = true){
+      //auto selector
+      switch (m_autoSelected) {
+        case kRedAuto:
+        //Red Side Auto Code
+        
+        break;
+        case kBlueAuto:
+        //Blue side auto code
+        
+        break;
+        case kDefaultAuto:
+        //Default auto code
 
-      break;
+        break;
+      }
+      //ultrasonic sensor stopper
+      /*STILL UNDER CONSTRUCTION*/
     }
-    //ultrasonic sensor stopper
-    /*STILL UNDER CONSTRUCTION*/
-
   }
 
   @Override
