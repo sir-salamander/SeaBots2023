@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -23,8 +22,8 @@ public class Drivetrain extends SubsystemBase {
       WPI_VictorSPX _leftFollower = new WPI_VictorSPX(20);
       
   //motorcontroller groups
-  MotorControllerGroup rightM = new MotorControllerGroup(_rghtFront, _rghtFollower);
-  MotorControllerGroup leftM = new MotorControllerGroup(_leftFront, _leftFollower);
+  public MotorControllerGroup rightM = new MotorControllerGroup(_rghtFront, _rghtFollower);
+  public MotorControllerGroup leftM = new MotorControllerGroup(_leftFront, _leftFollower);
   //Diff Drive
       DifferentialDrive differentialDrive = new DifferentialDrive(leftM, rightM);
   //Encoders
@@ -37,8 +36,11 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain() {
     //Commit to smartDashboard encoder speeds
-    SmartDashboard.putNumber("Speed Left", leftEncoder.getRate());
-    SmartDashboard.putNumber("Speed Right", rightEncoder.getRate());
+    SmartDashboard.putBoolean("Direction Left", leftEncoder.getDirection());
+    SmartDashboard.putBoolean("Direction Right", rightEncoder.getDirection());
+    SmartDashboard.putNumber("Distance Left", leftEncoder.getDistance());
+    SmartDashboard.putNumber("Distance Right", rightEncoder.getDistance());
+    
   }
 
   public void arcadeDrive(double movespeed, double rotatespeed) {

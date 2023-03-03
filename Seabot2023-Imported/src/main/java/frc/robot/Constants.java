@@ -17,6 +17,7 @@ public final class Constants {
     public static final int DRIVER_CONTROLLER = 0;
     public static final int DRIVER_CONTROLLER_ROTATE_AXIS = 0;
     public static final int DRIVER_CONTROLLER_MOVE_AXIS = 0;
+    public static Object Drivetrain;
 
     
 }

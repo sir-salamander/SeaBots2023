@@ -4,17 +4,17 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.FollowPathWithEvents;
-
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ultraSonicSensor;
-import frc.robot.subsystems.Drivetrain;
+
+
+//https://3015rangerrobotics.github.io/pathplannerlib/PathplannerLib.json
+
 
 
 
@@ -32,12 +32,11 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_Chooser = new SendableChooser<>();
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  PathPlannerTrajectory blueAuto = PathPlanner.loadPath("blueAuto", null);
   boolean runAuto = true;
   double sensorDist = ultraSonicSensor.getDistance();
   double sensorStop = .32;
-
-
+  public boolean dAuto = false;
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -46,6 +45,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    CameraServer.startAutomaticCapture();
     m_robotContainer = new RobotContainer();
     m_Chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_Chooser.addOption("Red Auto", kRedAuto);
@@ -89,11 +89,13 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+    
   //ultrasonic sensor stopper
 if (Double.compare(sensorStop, sensorDist) == 0){
     runAuto = false;
@@ -103,19 +105,13 @@ if (Double.compare(sensorStop, sensorDist) == 0){
       switch (m_autoSelected) {
         case kRedAuto:
         //Red Side Auto Code
-        
+          
         break;
-        case kBlueAuto:
-        //Blue side auto code
-        
-        break;
-        case kDefaultAuto:
-        //Default auto code
 
+        case kBlueAuto:
+        //blue auto code
         break;
       }
-      //ultrasonic sensor stopper
-      /*STILL UNDER CONSTRUCTION*/
     }
   }
 
