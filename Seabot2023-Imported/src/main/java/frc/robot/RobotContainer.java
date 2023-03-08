@@ -11,7 +11,6 @@ import frc.robot.commands.DriveArcade;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.arm_Grabber; 
 import frc.robot.subsystems.ultraSonicSensor;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -25,7 +24,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static final Drivetrain M_DRIVETRAIN = new Drivetrain();
   public static ultraSonicSensor M_ULTRA_SONIC_SENSOR = new ultraSonicSensor();
-  public static arm_Grabber m_Arm_Grabber = new arm_Grabber();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
