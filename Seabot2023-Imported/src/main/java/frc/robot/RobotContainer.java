@@ -56,4 +56,5 @@ public class RobotContainer {
   }
 
   public static Joystick driverController = new Joystick(Constants.DRIVER_CONTROLLER);
+  public XboxController xbox = new XboxController(0);
 }

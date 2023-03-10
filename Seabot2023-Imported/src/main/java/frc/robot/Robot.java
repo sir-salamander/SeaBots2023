@@ -5,7 +5,13 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,9 +39,20 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
   boolean runAuto = true;
-  double sensorDist = ultraSonicSensor.getDistance();
-  double sensorStop = .32;
   public boolean dAuto = false;
+  
+
+  //pneumatics
+  //new compressor
+  Compressor pcmCompressor;
+  boolean pressureSwitch;
+  double current;
+  //solenoid
+  DoubleSolenoid DoublePCM;
+  // xbox
+  public XboxController xbox = new XboxController(0);
+  //timer 
+  Timer timer  = new Timer();
   
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -52,6 +69,11 @@ public class Robot extends TimedRobot {
     m_Chooser.addOption("Blue Auto", kBlueAuto);
 
     SmartDashboard.putData("Auto Choices", m_Chooser);
+    pcmCompressor = new Compressor(3, PneumaticsModuleType.CTREPCM);
+    pcmCompressor.enableDigital();
+    pressureSwitch = pcmCompressor.getPressureSwitchValue();
+    current = pcmCompressor.getCurrent();
+    DoublePCM  = new DoubleSolenoid(3, PneumaticsModuleType.CTREPCM, 1, 2);
   }
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
@@ -69,6 +91,8 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("Distance (volts)", ultraSonicSensor.getVoltage());
 	  SmartDashboard.putNumber("Distance (real)", ultraSonicSensor.getDistance());
+    SmartDashboard.putBoolean("pressureSwitch", pressureSwitch);
+    SmartDashboard.putNumber("comp current", current);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -89,30 +113,16 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    
+    timer.reset();
+    timer.start();
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    
-  //ultrasonic sensor stopper
-if (Double.compare(sensorStop, sensorDist) == 0){
-    runAuto = false;
-}
-    if (runAuto = true){
-      //auto selector
-      switch (m_autoSelected) {
-        case kRedAuto:
-        //Red Side Auto Code
-          
-        break;
-
-        case kBlueAuto:
-        //blue auto code
-        break;
-      }
-    }
+  if (timer.get() < 5) {
+    RobotContainer.M_DRIVETRAIN.arcadeDrive(-.7, 0);
+  }
   }
 
   @Override
@@ -124,12 +134,23 @@ if (Double.compare(sensorStop, sensorDist) == 0){
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    //set start to reversed
+    DoublePCM.set(Value.kReverse);
   } 
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-
+  // extend piston
+    if (xbox.getRawButton(2)) {
+    DoublePCM.set(Value.kForward);
+    System.err.println("forward");
+    }
+    // retract piston
+    if (xbox.getRawButton(1)) {
+    DoublePCM.set(Value.kReverse);
+    System.err.println("back");
+    }
   }
 
   @Override
